@@ -1,0 +1,53 @@
+* {
+  font-family: "Geist Mono", monospace;
+}
+
+:root {
+  /* Cores principais */
+  --background-color: hsla(227, 59%, 10%, 1);
+  --background-secondary: hsla(227, 48%, 16%, 1);
+  --background-tertiary: hsla(227, 40%, 21%, 1);
+
+  /* Cores de destaque */
+  --primary-color: hsla(189, 100%, 50%, 1);
+  --primary-hover: hsla(189, 100%, 43%, 1);
+  --accent-color: hsla(261, 80%, 58%, 1);
+
+  /* Cores de texto */
+  --text-primary: hsla(220, 20%, 92%, 1);
+  --text-secondary: hsla(220, 20%, 74%, 1);
+  --text-muted: rgb(199, 56, 0);
+
+  /* Cores de borda e divisão */
+  --border-color: hsla(227, 30%, 25%, 1);
+  --border-hover: hsla(227, 25%, 32%, 1);
+
+  /* Cores de sucesso/erro */
+  --success-color: hsla(158, 64%, 52%, 1);
+  --warning-color: hsla(38, 92%, 50%, 1);
+  --error-color: hsla(0, 84%, 60%, 1);
+
+  /* Sombras e efeitos */
+  --shadow-sm: 0 2px 8px hsla(189, 100%, 50%, 0.1);
+  --shadow-md: 0 4px 16px hsla(189, 100%, 50%, 0.15);
+  --shadow-lg: 0 8px 32px hsla(189, 100%, 50%, 0.2);
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsla(189, 100%, 50%, 1) 0%,
+    hsla(261, 80%, 58%, 1) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    hsla(227, 40%, 21%, 1) 0%,
+    hsla(227, 59%, 10%, 1) 100%
+  );
+}
+
+body {
+  height: 100dvh;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  margin: 0;
+}

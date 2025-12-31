@@ -1,0 +1,33 @@
+.ApresentationContainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+
+  .container {
+    width: 75dvw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .contact {
+    }
+
+    .showContact {
+    }
+  }
+}
+.CopyrightLogo {
+  margin-left: 1rem;
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 10rem;
+  background: transparent;
+  z-index: 2;
+  justify-content: space-between;
+  align-items: center;
+}
