@@ -3,37 +3,88 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
+}
 
-  .container {
-    width: 75dvw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.container {
+  width: 75dvw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
+    justify-content 0.3s ease;
+}
+
+.contact {
+  background: var(--background-secondary);
+  border: 2px solid var(--orange-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem 3rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-60%);
+  box-shadow:
+    var(--shadow-orange-md),
+    var(--shadow-card),
+    inset 0 1px 0 hsla(25, 100%, 50%, 0.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
+    opacity 0.3s ease 0.1s,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  width: 10rem;
+
+  h1 {
+    margin: 0;
+    background: var(--gradient-orange);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: var(--text-muted);
     transition:
-      transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
-      justify-content 0.3s ease;
+      transform 0.3s ease,
+      color 0.3s ease;
+    font-size: 1.5rem;
 
-    .contact {
-      color: rgba(83, 82, 82, 0.7);
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateX(-360%);
-      transition:
-        transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
-        opacity 0.3s ease 0.1s;
-    }
-
-    .showContact {
-      transform: translateX(30%);
-      opacity: 1;
+    &&:hover {
+      color: var(--orange-light);
+      transform: scale(1.1);
     }
   }
-  .containerShifted {
-    transform: translateX(-12%);
+
+  &&:hover {
+    border-color: var(--orange-light);
+    box-shadow:
+      var(--shadow-orange-lg),
+      var(--shadow-orange-glow),
+      var(--shadow-elevated),
+      inset 0 1px 0 hsla(25, 100%, 50%, 0.2);
   }
 }
+.showContact {
+  transform: translateX(30%);
+  opacity: 1;
+}
+
+.containerShifted {
+  transform: translateX(-12%);
+}
+
 .CopyrightLogo {
   margin-left: 1rem;
   position: absolute;
@@ -45,4 +96,11 @@
   z-index: 2;
   justify-content: space-between;
   align-items: center;
+}
+
+.Greeting h1 {
+  font-size: 3rem;
+  margin: 0.5rem 0;
+  font-weight: 700;
+  line-height: 1.2;
 }
