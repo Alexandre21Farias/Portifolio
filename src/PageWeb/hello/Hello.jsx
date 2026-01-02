@@ -1,18 +1,22 @@
-import { useIntersectionObserver } from "/src/hooks/useIntersectionObserver";
+import { useIntersectionObserver } from "/src/hooks/useIntersectionObserver.js";
 import styles from "./styles.module.css";
 
 export default function HalloComponent() {
   const { ref, isVisible } = useIntersectionObserver({
-    threshold: 0.8,
+    threshold: 1,
   });
   console.log(isVisible);
   return (
-    <section className={styles.ApresentationContainer}>
+    <section ref={ref} className={styles.ApresentationContainer}>
       <span className={styles.CopyrightLogo}>
         <h3>© Made by Alex</h3>
       </span>
 
-      <div ref={ref} className={styles.container}>
+      <div
+        className={`${styles.container} ${
+          isVisible ? styles.containerShifted : ""
+        }`}
+      >
         <span className={styles.Greeting}>
           <h1>
             Hi, i am{" "}

@@ -10,13 +10,28 @@
     width: 75dvw;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    transition:
+      transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
+      justify-content 0.3s ease;
 
     .contact {
+      color: rgba(83, 82, 82, 0.7);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(-360%);
+      transition:
+        transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
+        opacity 0.3s ease 0.1s;
     }
 
     .showContact {
+      transform: translateX(30%);
+      opacity: 1;
     }
+  }
+  .containerShifted {
+    transform: translateX(-12%);
   }
 }
 .CopyrightLogo {
