@@ -1,6 +1,14 @@
 import { useIntersectionObserver } from "/src/hooks/useIntersectionObserver.js";
 import styles from "./styles.module.css";
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaEnvelope,
+  FaDownload,
+  FaFilePdf,
+  FaFileAlt,
+} from "react-icons/fa";
 
 export default function HalloComponent() {
   const { ref, isVisible } = useIntersectionObserver({
@@ -35,35 +43,42 @@ export default function HalloComponent() {
         <div
           className={`${styles.contact} ${isVisible ? styles.showContact : ""}`}
         >
-          <a
-            href="https://github.com/Alexandre21Farias"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <FaGithub />
-          </a>
+          <div className={styles.icons}>
+            <a
+              href="https://github.com/Alexandre21Farias"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FaGithub />
+            </a>
 
-          <a
-            href="https://www.linkedin.com/in/alexandre-farias-774420206/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <FaLinkedin />
-          </a>
+            <a
+              href="https://www.linkedin.com/in/alexandre-farias-774420206/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin />
+            </a>
 
-          <a
-            href="https://www.instagram.com/alex_xyz21/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <FaInstagram />
-          </a>
+            <a
+              href="https://www.instagram.com/alex_xyz21/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <FaInstagram />
+            </a>
 
-          <a href="mailto:alexandre21farias@gmail.com" aria-label="Email">
-            <FaEnvelope />
+            <a href="mailto:alexandre21farias@gmail.com" aria-label="Email">
+              <FaEnvelope />
+            </a>
+          </div>
+          <a href="/Alexandre_Farias_CV.pdf" download className="btn-cv">
+            <button>
+              <FaDownload size={14} /> Dowload CV
+            </button>
           </a>
         </div>
       </div>
