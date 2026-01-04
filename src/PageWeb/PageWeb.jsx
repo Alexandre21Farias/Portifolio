@@ -1,5 +1,4 @@
 import HelloComponent from "./hello/Hello";
-import WorksExHub from "./Experience/WorkExperience/WorksHub";
 import ProjectsHub from "./Projects/projectsHub";
 import styles from "./styles.module.css";
 import AboutMe from "./About/AboutMe";
@@ -9,7 +8,6 @@ export default function PageWeb() {
       <HelloComponent />
       <AboutMe />
       <ProjectsHub />
-      <WorksExHub />
     </div>
   );
 }
