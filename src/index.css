@@ -16,11 +16,25 @@
   /* Cores de texto */
   --text-primary: hsla(220, 20%, 92%, 1);
   --text-secondary: hsla(220, 20%, 74%, 1);
-  --text-muted: rgb(199, 56, 0);
+  --text-muted: hsla(220, 15%, 65%, 1);
+
+  /* Cores laranja (destaque secundário) */
+  --orange-primary: hsla(25, 100%, 39%, 1);
+  --orange-light: hsla(25, 100%, 50%, 1);
+  --orange-dark: hsla(25, 100%, 30%, 1);
+  --orange-glow: hsla(25, 100%, 50%, 0.3);
 
   /* Cores de borda e divisão */
   --border-color: hsla(227, 30%, 25%, 1);
   --border-hover: hsla(227, 25%, 32%, 1);
+  --border-focus: var(--orange-primary);
+  --border-accent: hsla(25, 100%, 50%, 0.5);
+  --border-width: 1px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-full: 9999px;
 
   /* Cores de sucesso/erro */
   --success-color: hsla(158, 64%, 52%, 1);
@@ -32,6 +46,15 @@
   --shadow-md: 0 4px 16px hsla(189, 100%, 50%, 0.15);
   --shadow-lg: 0 8px 32px hsla(189, 100%, 50%, 0.2);
 
+  --shadow-orange-sm: 0 2px 8px hsla(25, 100%, 50%, 0.2);
+  --shadow-orange-md: 0 4px 16px hsla(25, 100%, 50%, 0.3);
+  --shadow-orange-lg: 0 8px 32px hsla(25, 100%, 50%, 0.4);
+  --shadow-orange-glow: 0 0 20px hsla(25, 100%, 50%, 0.5);
+
+  --shadow-inset: inset 0 2px 4px hsla(227, 59%, 5%, 0.5);
+  --shadow-card: 0 4px 12px hsla(227, 59%, 5%, 0.3);
+  --shadow-elevated: 0 8px 24px hsla(227, 59%, 5%, 0.4);
+
   /* Gradientes */
   --gradient-primary: linear-gradient(
     135deg,
@@ -42,6 +65,21 @@
     135deg,
     hsla(227, 40%, 21%, 1) 0%,
     hsla(227, 59%, 10%, 1) 100%
+  );
+  --gradient-orange: linear-gradient(
+    135deg,
+    var(--orange-primary) 0%,
+    var(--orange-light) 100%
+  );
+  --gradient-blue-orange: linear-gradient(
+    135deg,
+    hsla(227, 59%, 10%, 1) 0%,
+    hsla(25, 100%, 39%, 1) 100%
+  );
+  --gradient-glow: radial-gradient(
+    circle at center,
+    hsla(25, 100%, 50%, 0.15) 0%,
+    transparent 70%
   );
 }
 
