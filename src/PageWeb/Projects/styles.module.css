@@ -1,0 +1,159 @@
+.ProjectsSection {
+  min-height: 90vh;
+  width: 100%;
+  padding: 8rem 3rem;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleContainer {
+  width: 100%;
+  max-width: 1100px;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.list {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Row Styling inspired by Dennis Snellenberg */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.row:first-child {
+  border-top: 1px solid var(--border-color);
+}
+
+.rowLeft {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.rowNumber {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.rowTitle {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.rowRight {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.rowCategory {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  transition: color 0.4s ease;
+}
+
+.rowYear {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+/* Hover effects */
+.row:hover {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: var(--background-secondary);
+  border-bottom-color: var(--orange-light);
+}
+
+.row:hover .rowTitle {
+  color: var(--orange-light);
+  transform: translateX(10px);
+}
+
+.row:hover .rowCategory {
+  color: var(--text-primary);
+}
+
+/* Floating Image Overlay Effect */
+.previewContainer {
+  position: absolute;
+  right: 20%;
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+  width: 140px;
+  height: 90px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.row:hover .previewContainer {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: var(--background-tertiary);
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 2rem 1rem;
+  }
+  .rowLeft {
+    gap: 1.5rem;
+  }
+  .rowRight {
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 2.5rem;
+  }
+  .previewContainer {
+    display: none;
+  }
+}

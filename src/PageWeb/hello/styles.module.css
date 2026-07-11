@@ -1,127 +1,348 @@
-.ApresentationContainer {
+.Hero {
   display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  height: 100dvh;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100dvh;
   width: 100%;
-}
-
-.container {
-  width: 75dvw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
-    justify-content 0.3s ease;
-}
-
-.contact {
-  background: var(--background-secondary);
-  border: 2px solid var(--orange-primary);
-  border-radius: var(--border-radius-lg);
-  padding: 2rem 3rem;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-60%);
-  box-shadow:
-    var(--shadow-orange-md),
-    var(--shadow-card),
-    inset 0 1px 0 hsla(25, 100%, 50%, 0.1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  transition:
-    transform 0.6s cubic-bezier(0.13, 0.58, 1, 0.95),
-    opacity 0.3s ease 0.1s,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+  padding: 3rem 0 0 0;
+  background-color: var(--background-color);
+}
 
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 4rem;
+  z-index: 10;
+}
+
+.Brand {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Glitch animation for Status Indicator */
+.StatusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  animation: statusGlitch 4s infinite ease-in-out;
+  justify-content: center;
+}
+
+.GreenDot {
+  width: 10px;
+  height: 10px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #22c55e;
+}
+
+.NavLinks {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.NavLinks a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.NavLinks a:hover {
+  color: var(--text-primary);
+}
+
+.LanguageSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 1rem;
+}
+
+.LanguageTitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.LanguageButtons {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--background-tertiary);
+  padding: 0.25rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.LangBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.4rem 0.8rem;
+  border-radius: calc(var(--border-radius-sm) - 2px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.LangBtn:hover {
+  color: var(--text-primary);
+}
+
+.LangBtnActive {
+  background: var(--orange-light);
+  color: var(--background-color) !important;
+}
+
+.HamburgerBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+}
+
+.HamburgerBtn:hover {
+  color: var(--orange-light);
+}
+
+.MainHeroContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .icons {
-    display: flex;
-    justify-content: space-around;
-    width: 10rem;
-  }
-
-  h1 {
-    margin: 0;
-    background: var(--gradient-orange);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  a {
-    color: var(--text-muted);
-    transition:
-      transform 0.3s ease,
-      color 0.3s ease;
-    font-size: 1.5rem;
-
-    &&:hover {
-      color: var(--orange-light);
-      transform: scale(1.1);
-    }
-  }
-
-  button {
-    background: var(--gradient-orange);
-    border: 2px solid var(--orange-primary);
-    border-radius: var(--border-radius-md);
-    padding: 0.7rem;
-    color: var(--text-primary);
-    cursor: pointer;
-    box-shadow:
-      var(--shadow-orange-md),
-      inset 0 1px 0 hsla(25, 100%, 60%, 0.3);
-
-    &&::hover {
-      transform: translateY(-2px);
-    }
-  }
-
-  &&:hover {
-    border-color: var(--orange-light);
-    box-shadow:
-      var(--shadow-orange-lg),
-      var(--shadow-orange-glow),
-      var(--shadow-elevated),
-      inset 0 1px 0 hsla(25, 100%, 50%, 0.2);
-  }
-}
-.showContact {
-  transform: translateX(30%);
-  opacity: 1;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+  padding: 4rem 2rem;
 }
 
-.containerShifted {
-  transform: translateX(-12%);
-}
-
-.CopyrightLogo {
-  margin-left: 1rem;
-  position: absolute;
+.Introduction {
   display: flex;
-  top: 0;
-  left: 0;
-  width: 10rem;
-  background: transparent;
-  z-index: 2;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
 }
 
-.Greeting h1 {
-  font-size: 3rem;
-  margin: 0.5rem 0;
-  font-weight: 700;
-  line-height: 1.2;
+.SubTitle {
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--orange-light);
+  font-weight: 600;
+}
+
+.Title {
+  font-size: clamp(3.5rem, 10vw, 8.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.TitleHighlight {
+  color: var(--orange-light);
+  text-shadow: var(--shadow-orange-glow);
+}
+
+.ContactWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.SocialIcons {
+  display: flex;
+  gap: 2rem;
+}
+
+.SocialIcons a {
+  color: var(--text-secondary);
+  font-size: 1.95rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.SocialIcons a:hover {
+  color: var(--orange-light);
+  transform: translateY(-5px) scale(1.15);
+}
+
+.DownloadBtn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 1rem 2.4rem;
+  border-radius: var(--border-radius-full);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.DownloadBtn:hover {
+  background: var(--text-primary);
+  color: var(--background-color);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+.DividerContainer {
+  width: 100%;
+  text-align: center;
+  background: var(--background-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+}
+
+.DividerText {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--text-secondary);
+  display: inline-block;
+  animation: textGlitch 4.5s infinite ease-in-out;
+}
+
+/* Glitch animation logic */
+@keyframes statusGlitch {
+  0%, 100%, 88%, 94%, 98% {
+    opacity: 1;
+    transform: skew(0deg);
+    filter: blur(0px);
+  }
+  90% {
+    opacity: 0.35;
+    transform: skew(4deg) translate(-2px, 1px);
+    color: var(--orange-light);
+    filter: blur(0.5px);
+  }
+  92% {
+    opacity: 0.8;
+    transform: skew(-2deg) translate(2px, -1px);
+    color: #ef4444;
+  }
+  96% {
+    opacity: 0.2;
+    transform: skew(6deg);
+    filter: blur(1px);
+  }
+}
+
+@keyframes textGlitch {
+  0%, 100%, 85%, 89%, 93%, 97% {
+    text-shadow: none;
+    transform: skew(0deg);
+    color: var(--text-secondary);
+  }
+  86% {
+    text-shadow: 2px -1px 0 var(--orange-light), -2px 1px 0 #ef4444;
+    transform: skew(3deg);
+    color: var(--text-primary);
+  }
+  88% {
+    text-shadow: -2px 1px 0 var(--orange-light), 2px -1px 0 #ef4444;
+    transform: skew(-2deg);
+  }
+  90% {
+    text-shadow: 3px 2px 0 var(--orange-light), -3px -2px 0 #22c55e;
+    transform: skew(1.5deg);
+    color: var(--text-primary);
+  }
+  92% {
+    text-shadow: none;
+    transform: skew(0deg);
+  }
+  94% {
+    text-shadow: -1px -2px 0 var(--orange-light), 1px 2px 0 #ef4444;
+    transform: skew(-3deg);
+  }
+  96% {
+    text-shadow: 2px 2px 0 var(--orange-light), -2px -2px 0 #ef4444;
+    transform: skew(2deg);
+    color: var(--text-primary);
+  }
+}
+
+@media (max-width: 768px) {
+  .Header {
+    padding: 0 2rem;
+  }
+  .StatusIndicator {
+    display: none;
+  }
+  .HamburgerBtn {
+    display: block;
+  }
+  .NavLinks {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 280px;
+    height: 100vh;
+    background: var(--background-secondary);
+    border-left: 1px solid var(--border-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    z-index: 99;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .NavLinksActive {
+    right: 0;
+    box-shadow: -15px 0 30px rgba(0, 0, 0, 0.65);
+  }
+  .NavLinks a {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .DividerContainer {
+    padding: 1.2rem 1.2rem;
+  }
+  .DividerText {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+  }
+  .DownloadBtn {
+    padding: 1.1rem 2.8rem; /* Ensure solid finger targets (min 48px height) */
+    font-size: 1.1rem;
+  }
+  .LanguageSection {
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-left: 0;
+    gap: 0.8rem;
+  }
 }

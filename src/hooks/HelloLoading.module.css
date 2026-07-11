@@ -1,0 +1,52 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  font-family: "Geist Mono", monospace;
+  overflow: hidden;
+}
+
+.textGlow {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--orange-light);
+  text-shadow: var(--shadow-orange-glow);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin-top: 1.5rem;
+  border: 3px solid var(--background-secondary);
+  border-top: 3px solid var(--orange-light);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: var(--shadow-orange-sm);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

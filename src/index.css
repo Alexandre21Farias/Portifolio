@@ -1,91 +1,81 @@
 * {
   font-family: "Geist Mono", monospace;
+  box-sizing: border-box;
 }
 
 :root {
-  /* Cores principais */
-  --background-color: hsla(227, 59%, 10%, 1);
-  --background-secondary: hsla(227, 48%, 16%, 1);
-  --background-tertiary: hsla(227, 40%, 21%, 1);
+  /* Cores principais - Tema Dark Elegante e Minimalista */
+  --background-color: #0e0e10;
+  --background-secondary: #131316;
+  --background-tertiary: #19191d;
 
   /* Cores de destaque */
-  --primary-color: hsla(189, 100%, 50%, 1);
-  --primary-hover: hsla(189, 100%, 43%, 1);
-  --accent-color: hsla(261, 80%, 58%, 1);
+  --primary-color: #ffffff;
+  --primary-hover: #e4e4e7;
+  --accent-color: #f97316; /* Laranja minimalista */
+  --orange-light: #fb923c;
+  --orange-primary: #f97316;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
 
   /* Cores de texto */
-  --text-primary: hsla(220, 20%, 92%, 1);
-  --text-secondary: hsla(220, 20%, 74%, 1);
-  --text-muted: hsla(220, 15%, 65%, 1);
-
-  /* Cores laranja (destaque secundário) */
-  --orange-primary: hsla(25, 100%, 39%, 1);
-  --orange-light: hsla(25, 100%, 50%, 1);
-  --orange-dark: hsla(25, 100%, 30%, 1);
-  --orange-glow: hsla(25, 100%, 50%, 0.3);
-
-  /* Cores de borda e divisão */
-  --border-color: hsla(227, 30%, 25%, 1);
-  --border-hover: hsla(227, 25%, 32%, 1);
-  --border-focus: var(--orange-primary);
-  --border-accent: hsla(25, 100%, 50%, 0.5);
-  --border-width: 1px;
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
-  --border-radius-full: 9999px;
-
-  /* Cores de sucesso/erro */
-  --success-color: hsla(158, 64%, 52%, 1);
-  --warning-color: hsla(38, 92%, 50%, 1);
-  --error-color: hsla(0, 84%, 60%, 1);
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
 
   /* Sombras e efeitos */
-  --shadow-sm: 0 2px 8px hsla(189, 100%, 50%, 0.1);
-  --shadow-md: 0 4px 16px hsla(189, 100%, 50%, 0.15);
-  --shadow-lg: 0 8px 32px hsla(189, 100%, 50%, 0.2);
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --shadow-orange-glow: 0 0 25px rgba(249, 115, 22, 0.25);
 
-  --shadow-orange-sm: 0 2px 8px hsla(25, 100%, 50%, 0.2);
-  --shadow-orange-md: 0 4px 16px hsla(25, 100%, 50%, 0.3);
-  --shadow-orange-lg: 0 8px 32px hsla(25, 100%, 50%, 0.4);
-  --shadow-orange-glow: 0 0 20px hsla(25, 100%, 50%, 0.5);
+  /* Border Radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 32px;
+  --border-radius-full: 9999px;
+  
+  /* Scroll Rotation dynamic variable */
+  --scroll-rot: 0deg;
+}
 
-  --shadow-inset: inset 0 2px 4px hsla(227, 59%, 5%, 0.5);
-  --shadow-card: 0 4px 12px hsla(227, 59%, 5%, 0.3);
-  --shadow-elevated: 0 8px 24px hsla(227, 59%, 5%, 0.4);
-
-  /* Gradientes */
-  --gradient-primary: linear-gradient(
-    135deg,
-    hsla(189, 100%, 50%, 1) 0%,
-    hsla(261, 80%, 58%, 1) 100%
-  );
-  --gradient-secondary: linear-gradient(
-    135deg,
-    hsla(227, 40%, 21%, 1) 0%,
-    hsla(227, 59%, 10%, 1) 100%
-  );
-  --gradient-orange: linear-gradient(
-    135deg,
-    var(--orange-primary) 0%,
-    var(--orange-light) 100%
-  );
-  --gradient-blue-orange: linear-gradient(
-    135deg,
-    hsla(227, 59%, 10%, 1) 0%,
-    hsla(25, 100%, 39%, 1) 100%
-  );
-  --gradient-glow: radial-gradient(
-    circle at center,
-    hsla(25, 100%, 50%, 0.15) 0%,
-    transparent 70%
-  );
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  height: 100dvh;
+  min-height: 100dvh;
   background-color: var(--background-color);
   color: var(--text-primary);
   margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--background-tertiary);
+  border-radius: var(--border-radius-full);
+  border: 2px solid var(--background-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+
+
+/* Scroll reveal helper classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.revealActive {
+  opacity: 1;
+  transform: translateY(0);
 }
