@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HelloComponent from "./hello/Hello";
 import ProjectsHub from "./Projects/projectsHub";
 import styles from "./styles.module.css";
@@ -8,6 +8,10 @@ import NenTest from "./Nen/NenTest";
 
 export default function PageWeb() {
   const [language, setLanguage] = useState("en"); // 'en' or 'pt'
+
+  useEffect(() => {
+    document.documentElement.lang = language === "en" ? "en" : "pt-BR";
+  }, [language]);
 
   return (
     <div className={styles.PrimaryContainer}>

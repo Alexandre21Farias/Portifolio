@@ -85,7 +85,7 @@ export default function ProjectsHub({ language }) {
             aria-label={featured.title}
             {...tiltHandlers}
           >
-            <img src={featured.preview} alt="" />
+            <img src={featured.preview} alt={en ? "Open Bahia forum homepage" : "Página inicial do fórum Open Bahia"} />
             <span className={styles.shine} aria-hidden="true" />
           </a>
 
