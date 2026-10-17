@@ -1,0 +1,156 @@
+/* taste-skill-ignore-file: this is a reproduction of a real framed print (frame, rules, shadow) */
+.wall {
+  perspective: 1200px;
+}
+
+/* hangs a little crooked; on hover it straightens and follows the cursor */
+.poster {
+  --rest: -4deg;
+  margin: 0;
+  width: clamp(240px, 27vw, 420px);
+  padding: clamp(10px, 1.1vw, 16px);
+  background: #121212;
+  border-radius: 4px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), 0 8px 18px rgba(0, 0, 0, 0.35); /* taste-skill-ignore: a framed print on a wall */
+  transform: rotate(var(--rest)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--ease-elastic);
+  animation: hang 1400ms var(--ease-elastic) 300ms backwards;
+}
+
+.poster:hover {
+  --rest: 0deg;
+  transition: transform 260ms var(--ease-out);
+}
+
+/* drops onto its nail and swings into place */
+@keyframes hang {
+  from {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-14deg);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+.paper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 1.4em 1.4em 1.1em;
+  background: #ede7d8;
+  color: #161616;
+  font-size: clamp(9px, 0.95vw, 14px);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 0.6em;
+  border-bottom: 1.5px solid #161616; /* taste-skill-ignore: the print's own rule */
+}
+
+/* the wordmark, built like the series logo: second word upside down */
+.logo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.1em;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.flip {
+  display: block;
+  transform: scaleY(-1);
+  color: transparent;
+  -webkit-text-stroke: 1.5px #161616;
+}
+
+.series {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1.05em;
+  letter-spacing: 0.08em;
+}
+
+.year {
+  font-size: 1.6em;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* the full photo fills the panel; scaled up slightly so the parallax never shows an edge */
+.panel {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  margin-top: 1.2em;
+  overflow: hidden;
+  background: #4169b8;
+}
+
+.panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 80%; /* from the hair down to the crossed arms */
+  scale: 1.08;
+  translate: var(--px, 0px) var(--py, 0px);
+  transition: translate 900ms var(--ease-elastic);
+}
+
+.poster:hover .panel img {
+  transition-duration: 260ms;
+  transition-timing-function: var(--ease-out);
+}
+
+.swatches {
+  display: flex;
+  height: 1.1em;
+  margin-top: 0.4em;
+}
+
+.swatches span {
+  flex: 1;
+}
+
+.credit {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 1em;
+}
+
+.credit strong {
+  display: block;
+  font-size: 1.2em;
+  font-weight: 800;
+}
+
+.mark {
+  font-weight: 900;
+  font-size: 1.1em;
+  letter-spacing: 0.05em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster {
+    transform: rotate(var(--rest));
+  }
+  .panel img {
+    translate: none;
+  }
+}

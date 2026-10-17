@@ -1,302 +1,483 @@
+/* First screen: header, the lit portrait, the name across the width, sentence + action */
 .Hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  /* capped so very tall screens do not open with a sea of empty ground */
+  min-height: min(100svh, 62rem);
   width: 100%;
-  position: relative;
-  overflow: hidden;
-  padding: 3rem 0 0 0;
+  padding: 2rem var(--gutter) 2.5rem;
   background-color: var(--background-color);
+  overflow: hidden;
 }
 
 .Header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 0 4rem;
+  gap: 2rem;
   z-index: 10;
 }
 
-.Brand {
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+.BrandSlot {
   flex: 1;
-  display: flex;
-  justify-content: flex-start;
 }
 
-/* Glitch animation for Status Indicator */
+.Brand {
+  font-size: var(--step-body);
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
 .StatusIndicator {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1rem;
+  font-size: var(--step-small);
   color: var(--text-secondary);
-  animation: statusGlitch 4s infinite ease-in-out;
-  justify-content: center;
 }
 
 .GreenDot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #22c55e;
   border-radius: 50%;
-  box-shadow: 0 0 12px #22c55e;
 }
 
 .NavLinks {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
   flex: 1;
+  display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
 }
 
 .NavLinks a {
-  color: var(--text-secondary);
+  position: relative;
+  color: var(--ink);
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: var(--step-small);
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+/* underline grows from the left on hover, leaves to the right */
+.NavLinks a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-base) var(--ease-out);
 }
 
 .NavLinks a:hover {
-  color: var(--text-primary);
+  color: var(--accent);
 }
 
-.LanguageSection {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.6rem;
-  margin-left: 1rem;
-}
-
-.LanguageTitle {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
+.NavLinks a:hover::after,
+.NavLinks a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .LanguageButtons {
   display: flex;
-  gap: 0.5rem;
-  background: var(--background-tertiary);
-  padding: 0.25rem;
-  border-radius: var(--border-radius-sm);
-  border: 1px solid var(--border-color);
+  gap: 0.25rem;
 }
 
 .LangBtn {
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.4rem 0.8rem;
-  border-radius: calc(var(--border-radius-sm) - 2px);
+  font-size: var(--step-small);
+  font-weight: 600;
+  padding: 0.4rem 0.5rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
-.LangBtn:hover {
-  color: var(--text-primary);
+.LangBtn:hover,
+.LangBtnActive {
+  color: var(--ink);
 }
 
 .LangBtnActive {
-  background: var(--orange-light);
-  color: var(--background-color) !important;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.LangBtn:active {
+  transform: scale(0.95);
+}
+
+/* Bungee Gum (Hisoka): follows the cursor while hovered, springs back with an elastic wobble on leave */
+.gum {
+  display: inline-block;
+  transform: translate(var(--gx, 0px), var(--gy, 0px)) scaleX(var(--gs, 1));
+  transition: transform 1100ms var(--ease-elastic), color var(--dur-fast) var(--ease-out);
+}
+
+.gum:hover {
+  transition: transform 140ms var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+/* Hisoka's suit shows up on the name */
+.Brand.gum::after {
+  content: "♠"; /* taste-skill-ignore: text glyph, Hisoka reference */
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--accent);
+  transform: scale(0) rotate(-90deg);
+  transition: transform 500ms var(--ease-elastic);
+}
+
+.Brand.gum:hover::after,
+.Brand.gum:focus-visible::after {
+  transform: scale(1) rotate(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gum {
+    transform: none !important;
+  }
 }
 
 .HamburgerBtn {
   display: none;
   background: none;
   border: none;
-  color: var(--text-primary);
-  font-size: 1.8rem;
+  color: var(--ink);
+  font-size: 1.6rem;
   cursor: pointer;
   z-index: 100;
-  transition: all 0.3s ease;
+  transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   padding: 0.5rem;
 }
 
 .HamburgerBtn:hover {
-  color: var(--orange-light);
+  color: var(--accent);
 }
 
-.MainHeroContent {
-  display: flex;
-  flex-direction: column;
+.HamburgerBtn:active {
+  transform: scale(0.9);
+}
+
+/* headline + sentence on the left, quick facts on the right, the poster in the middle */
+.Stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  text-align: center;
-  padding: 4rem 2rem;
+  gap: clamp(1.5rem, 4vw, 5rem);
+  margin-top: 2rem;
 }
 
-.Introduction {
+.Intro {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin-bottom: 3.5rem;
 }
 
-.SubTitle {
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--orange-light);
-  font-weight: 600;
+/* the headline sticks to the cursor like the brand (gum); the gum, string and aces ride along inside it */
+.HeadGum {
+  position: relative;
+  isolation: isolate;
+  align-self: flex-start;
+  /* the headline is a handle to hold, not text to select */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  cursor: grab;
 }
 
-.Title {
-  font-size: clamp(3.5rem, 10vw, 8.5rem);
-  font-weight: 800;
-  line-height: 1.05;
-  margin: 0;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
+.HeadGum[data-held] {
+  cursor: grabbing;
 }
 
-.TitleHighlight {
-  color: var(--orange-light);
-  text-shadow: var(--shadow-orange-glow);
+/* Hisoka's Bungee Gum: a gum anchored on the headline stretches to the cursor, where a goo blob holds a fan of aces.
+   JS (gooMove) feeds --mx/--my and draws the band; leaving the headline releases it, the band thins out and the aces vanish. */
+.HeadGum {
+  --pink: #ff5fa8; /* taste-skill-ignore: Hisoka's gum pink */
+  --pink-deep: #d93a86; /* taste-skill-ignore: Hisoka's gum pink, shadow layer */
+  --goo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 175' preserveAspectRatio='none'%3E%3Cpath fill='%23ff5fa8' d='M30 60C20 30 60 10 95 18C130 0 175 20 178 58C195 80 188 120 165 132C168 150 150 168 138 150C128 140 118 160 105 164C90 172 82 150 70 148C45 158 28 140 40 122C10 112 8 80 30 60Z'/%3E%3C/svg%3E");
 }
 
-.ContactWrapper {
+/* the stretchy band between anchor and cursor; its path is set by gooMove */
+.Goo {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms var(--ease-out);
+}
+
+.Goo path {
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* only the release is animated; while hovered the band tracks the cursor with no lag */
+.HeadGum:not(:hover, [data-held]) .Goo path {
+  transition: stroke-width 320ms var(--ease-elastic);
+}
+
+.Goo path:first-child {
+  stroke: var(--pink-deep);
+  translate: 3px 4px;
+}
+
+.Goo path:last-child {
+  stroke: var(--pink);
+}
+
+.HeadGum:is(:hover, [data-held]) .Goo {
+  opacity: 0.92;
+}
+
+/* zero-size point that sits on the cursor; blob and aces are drawn around it */
+.Cards {
+  position: absolute;
+  z-index: -1;
+  left: var(--mx, 50%);
+  top: var(--my, 50%);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* the gum ball on the cursor end of the band */
+.Cards::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -2.75rem;
+  top: -2.4rem;
+  width: 5.5rem;
+  height: 4.8rem;
+  background: var(--goo) center / 100% 100% no-repeat;
+  opacity: 0.92;
+  filter: drop-shadow(0.25rem 0.3rem 0 var(--pink-deep));
+  transform: scale(0);
+  transition: transform 220ms var(--ease-in-out);
+}
+
+.HeadGum:is(:hover, [data-held]) .Cards::before {
+  transform: scale(1);
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* the aces are their own animation: fixed behind the headline, they slide up when it is hovered and ignore the cursor */
+.Aces {
+  position: absolute;
+  z-index: -1;
+  left: 2.5rem; /* over the "F", fanning diagonally up and to the right */
+  top: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.Card {
+  position: absolute;
+  left: -3rem;
+  top: -4rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  width: 3.9rem;
+  height: 5.4rem;
+  padding: 0.3rem 0.4rem;
+  background: var(--ink);
+  border: 2px solid var(--background-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 2px var(--ink); /* white sticker rim */
+  color: var(--background-color);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0;
+  transform-origin: 20% 90%;
+  transform: translate(0, 1.5rem) rotate(0deg) scale(0.9);
+  transition: transform 200ms var(--ease-out), opacity 160ms var(--ease-out);
+}
+
+.Card::after {
+  content: attr(data-suit);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+}
+
+.Card[data-red="true"] {
+  color: #e0245e; /* taste-skill-ignore: red suits */
+}
+
+/* if anything ever overlaps the letters they keep their edge */
+.HeadGum:is(:hover, [data-held]) .Headline {
+  text-shadow: 0 0 0.35rem var(--background-color), 0 0 0.8rem var(--background-color);
+}
+
+.HeadGum:is(:hover, [data-held]) .Card {
+  opacity: 1;
+  transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1);
+  transition: transform 380ms var(--ease-out) calc(var(--k) * 60ms), opacity 250ms var(--ease-out) calc(var(--k) * 60ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Cards::before,
+  .Card,
+  .Goo path,
+  .HeadGum:is(:hover, [data-held]) .Cards::before,
+  .HeadGum:is(:hover, [data-held]) .Card {
+    transition: opacity 200ms linear;
+  }
+}
+
+.Headline {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-head);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.Lead {
+  max-width: 36ch;
+  margin: 0;
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.Facts {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-self: end;
+  margin: 0;
+}
+
+.Facts dt {
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.Facts dd {
+  margin: 0.2rem 0 0;
+  font-size: var(--step-body);
+  color: var(--ink);
+}
+
+.Bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.Actions {
+  display: flex;
   align-items: center;
   gap: 2rem;
-  margin-top: 1.5rem;
 }
 
 .SocialIcons {
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .SocialIcons a {
+  display: inline-flex;
   color: var(--text-secondary);
-  font-size: 1.95rem;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 1.5rem;
+  transition: color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
 }
 
 .SocialIcons a:hover {
-  color: var(--orange-light);
-  transform: translateY(-5px) scale(1.15);
+  color: var(--ink);
+  transform: translateY(-3px);
 }
 
+.SocialIcons a:active {
+  transform: translateY(-1px) scale(0.92);
+  transition-duration: var(--dur-fast);
+}
+
+/* the only solid light element on the page; on hover coffee rises inside it */
 .DownloadBtn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  padding: 1rem 2.4rem;
-  border-radius: var(--border-radius-full);
-  color: var(--text-primary);
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  transition: all 0.3s ease;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0 1.6rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--step-small);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 600ms var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+
+/* a big rounded square, slowly rotating, reads as a wave where it crosses the button */
+.DownloadBtn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -50%;
+  top: 100%;
+  width: 200%;
+  aspect-ratio: 1;
+  background: var(--coffee);
+  border-radius: 42%;
+  translate: 0 0;
+  animation: wave 5s linear infinite;
+  transition: translate 900ms var(--ease-out);
+}
+
+@keyframes wave {
+  to {
+    rotate: 360deg;
+  }
 }
 
 .DownloadBtn:hover {
-  background: var(--text-primary);
-  color: var(--background-color);
-  border-color: var(--text-primary);
+  color: var(--on-coffee);
   transform: translateY(-2px);
 }
-.DividerContainer {
-  width: 100%;
-  text-align: center;
-  background: var(--background-secondary);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1.5rem 2rem;
+
+.DownloadBtn:hover::before,
+.DownloadBtn:focus-visible::before {
+  translate: 0 -92%;
 }
 
-.DividerText {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-secondary);
-  display: inline-block;
-  animation: textGlitch 4.5s infinite ease-in-out;
-}
-
-/* Glitch animation logic */
-@keyframes statusGlitch {
-  0%, 100%, 88%, 94%, 98% {
-    opacity: 1;
-    transform: skew(0deg);
-    filter: blur(0px);
-  }
-  90% {
-    opacity: 0.35;
-    transform: skew(4deg) translate(-2px, 1px);
-    color: var(--orange-light);
-    filter: blur(0.5px);
-  }
-  92% {
-    opacity: 0.8;
-    transform: skew(-2deg) translate(2px, -1px);
-    color: #ef4444;
-  }
-  96% {
-    opacity: 0.2;
-    transform: skew(6deg);
-    filter: blur(1px);
-  }
-}
-
-@keyframes textGlitch {
-  0%, 100%, 85%, 89%, 93%, 97% {
-    text-shadow: none;
-    transform: skew(0deg);
-    color: var(--text-secondary);
-  }
-  86% {
-    text-shadow: 2px -1px 0 var(--orange-light), -2px 1px 0 #ef4444;
-    transform: skew(3deg);
-    color: var(--text-primary);
-  }
-  88% {
-    text-shadow: -2px 1px 0 var(--orange-light), 2px -1px 0 #ef4444;
-    transform: skew(-2deg);
-  }
-  90% {
-    text-shadow: 3px 2px 0 var(--orange-light), -3px -2px 0 #22c55e;
-    transform: skew(1.5deg);
-    color: var(--text-primary);
-  }
-  92% {
-    text-shadow: none;
-    transform: skew(0deg);
-  }
-  94% {
-    text-shadow: -1px -2px 0 var(--orange-light), 1px 2px 0 #ef4444;
-    transform: skew(-3deg);
-  }
-  96% {
-    text-shadow: 2px 2px 0 var(--orange-light), -2px -2px 0 #ef4444;
-    transform: skew(2deg);
-    color: var(--text-primary);
-  }
+.DownloadBtn:active {
+  transform: scale(0.97);
+  transition-duration: var(--dur-fast);
 }
 
 @media (max-width: 768px) {
-  .Header {
-    padding: 0 2rem;
+  .Hero {
+    padding-top: 1.25rem;
   }
   .StatusIndicator {
     display: none;
@@ -307,42 +488,55 @@
   .NavLinks {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
+    transform: translateX(100%);
+    visibility: hidden;
     width: 75%;
     max-width: 280px;
-    height: 100vh;
-    background: var(--background-secondary);
-    border-left: 1px solid var(--border-color);
+    height: 100dvh;
+    background: var(--background-tertiary);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 2.5rem;
     z-index: 99;
-    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* closing is quicker than opening; visibility keeps closed links out of tab order */
+    transition: transform 260ms var(--ease-in-out), visibility 0s linear 260ms;
   }
   .NavLinksActive {
-    right: 0;
-    box-shadow: -15px 0 30px rgba(0, 0, 0, 0.65);
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 420ms var(--ease-out), visibility 0s;
+    box-shadow: -15px 0 30px rgba(0, 0, 0, 0.65); /* taste-skill-ignore: drawer floats over the page */
   }
   .NavLinks a {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: var(--step-lead);
   }
-  .DividerContainer {
-    padding: 1.2rem 1.2rem;
-  }
-  .DividerText {
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-  }
-  .DownloadBtn {
-    padding: 1.1rem 2.8rem; /* Ensure solid finger targets (min 48px height) */
-    font-size: 1.1rem;
-  }
-  .LanguageSection {
+  .Bottom {
     flex-direction: column;
-    margin-top: 2rem;
-    margin-left: 0;
-    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  .Actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* below tablet width the side columns have no room: poster first, then text, facts last */
+@media (max-width: 900px) {
+  .Stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .PosterSlot {
+    order: -1;
+  }
+  .Intro,
+  .Facts {
+    justify-self: start;
+    width: 100%;
+  }
+  .Headline {
+    max-width: none;
   }
 }

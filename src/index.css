@@ -1,44 +1,69 @@
 * {
-  font-family: "Geist Mono", monospace;
   box-sizing: border-box;
 }
 
+body,
+button {
+  font-family: var(--font-text);
+}
+
 :root {
-  /* Cores principais - Tema Dark Elegante e Minimalista */
-  --background-color: #0e0e10;
-  --background-secondary: #131316;
-  --background-tertiary: #19191d;
-
-  /* Cores de destaque */
-  --primary-color: #ffffff;
-  --primary-hover: #e4e4e7;
-  --accent-color: #f97316; /* Laranja minimalista */
-  --orange-light: #fb923c;
-  --orange-primary: #f97316;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
-
-  /* Cores de texto */
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-
-  /* Sombras e efeitos */
-  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.5);
-  --shadow-orange-glow: 0 0 25px rgba(249, 115, 22, 0.25);
+  /* Tipografia: Nunito (arredondada) em tudo; títulos em peso leve */
+  --font-display: "Nunito", system-ui, sans-serif;
+  --font-text: "Nunito", system-ui, sans-serif;
+  --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --step-lead: clamp(1.375rem, 1.2rem + 0.8vw, 2.25rem);
+  --step-head: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
+  --step-display: clamp(2.5rem, 0.5rem + 7vw, 9rem);
+  --gutter: clamp(1rem, 0.5rem + 3vw, 4.5rem);
 
   /* Border Radius */
   --border-radius-sm: 8px;
   --border-radius-md: 16px;
   --border-radius-lg: 32px;
   --border-radius-full: 9999px;
-  
-  /* Scroll Rotation dynamic variable */
-  --scroll-rot: 0deg;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* elastic overshoot for things that snap back (Bungee Gum) */
+  --ease-elastic: linear(0, 0.218 2.1%, 0.862 6.5%, 1.114, 1.296 10.7%, 1.346, 1.37 12.9%, 1.373, 1.364 14.5%,
+    1.315 16.2%, 1.032 21.8%, 0.941 24%, 0.891 25.9%, 0.877, 0.869 27.8%, 0.87, 0.882 30.7%, 0.907 32.4%,
+    0.981 36.4%, 1.012 38.3%, 1.036, 1.046 42.7% 44.1%, 1.042 45.7%, 0.996 53.3%, 0.988, 0.984 57.5%,
+    0.985 60.7%, 1.001 68.1%, 1.006 72.2%, 0.998 86.7%, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-enter: 700ms;
+  --stagger: 80ms;
+}
+
+/* Paleta Open Bahia */
+:root {
+  color-scheme: dark;
+  --background-color: #0b2c43;
+  --background-secondary: #0f3b59;
+  --background-tertiary: #164b70;
+  --ink: #fefaf0;
+  --text-primary: #fefaf0;
+  --text-secondary: #88b8ce;
+  --text-muted: #88b8ce;
+  --accent: #eebb48;
+  --on-accent: #0b2c43;
+  --bubble-you: #88b8ce;
+  --on-bubble-you: #0b2c43;
+  --border-color: color-mix(in srgb, #fefaf0 14%, transparent);
+  --coffee: #3f1d12;
+  --on-coffee: #fefaf0;
+  --water: color-mix(in srgb, #88b8ce 70%, transparent);
+  --glass: color-mix(in srgb, #fefaf0 10%, transparent);
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -46,7 +71,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-primary);
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -68,14 +93,32 @@ body {
 
 
 
-/* Scroll reveal helper classes */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1.2s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+/* Entrance: opacity + rise + blur, staggered by --i (set inline per element) */
+.enter {
+  /* backwards, not both: a finished entrance must release transform so hover transitions still run */
+  animation: enter var(--dur-enter) var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
 }
 
-.revealActive {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
 }

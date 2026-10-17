@@ -1,0 +1,317 @@
+.Nen {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 7rem);
+  padding: clamp(7rem, 12vw, 12rem) var(--gutter);
+  background-color: var(--background-secondary);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-head);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.intro {
+  max-width: 52ch;
+  margin: 0;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.ren {
+  min-height: 48px;
+  padding: 0 1.5rem;
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--step-small);
+  font-weight: 700;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.ren:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ren:active {
+  transform: scale(0.96);
+}
+
+.result {
+  min-height: 3.2em;
+  max-width: 48ch;
+  margin: 0;
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.result strong {
+  color: var(--accent);
+}
+
+/* ---------- the glass ---------- */
+
+/* liquid level, animatable because it is a registered length */
+@property --level {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 110px;
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+  scale: 1.5; /* the glass is drawn at 170px; scaled so it holds its half of the screen */
+  user-select: none;
+}
+
+.stage[data-held="true"] .glass {
+  cursor: grabbing;
+}
+
+.glass {
+  --level: 110px;
+  cursor: grab;
+  touch-action: none; /* only the glass blocks touch scrolling, the rest of the page still scrolls */
+  position: relative;
+  width: 170px;
+  height: 250px;
+}
+
+/* glass body: a translucent filled shape, no outline */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 60px 0 0;
+  background: var(--glass);
+  border-radius: 6px 6px 30px 30px;
+}
+
+.liquid {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  /* 12px of headroom above the surface, so --s (set while dragging) can tilt it by clipping */
+  height: calc(var(--level) + 12px);
+  background: var(--water);
+  border-radius: 4px 4px 22px 22px;
+  overflow: hidden;
+  clip-path: polygon(0 calc(12px - var(--s, 0px)), 100% calc(12px + var(--s, 0px)), 100% 100%, 0 100%);
+}
+
+/* the bright line of the water's surface */
+.liquid::before {
+  content: "";
+  position: absolute;
+  inset: 12px 0 auto;
+  height: 5px;
+  background: color-mix(in srgb, #fefaf0 55%, transparent);
+  rotate: var(--tilt, 0deg);
+}
+
+/* coffee grains for the conjurer, hidden until then */
+.liquid i {
+  position: absolute;
+  width: 9px;
+  height: 6px;
+  background: var(--coffee);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.liquid i:nth-child(1) { left: 18%; top: 35%; }
+.liquid i:nth-child(2) { left: 62%; top: 48%; }
+.liquid i:nth-child(3) { left: 38%; top: 66%; }
+.liquid i:nth-child(4) { left: 76%; top: 74%; }
+.liquid i:nth-child(5) { left: 26%; top: 82%; }
+
+.leaf {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--level) + 8px);
+  width: 40px;
+  height: 20px;
+  margin-left: -20px;
+  background: #5b8c3e;
+  border-radius: 0 100% 0 100%;
+  transform: rotate(-12deg);
+  /* rides the tilted surface and drifts toward the high side */
+  translate: calc(var(--s, 0px) * -1.5) 0;
+  rotate: var(--tilt, 0deg);
+}
+
+/* centre vein */
+.leaf::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  height: 2px;
+  background: #3f6a2a;
+  transform: rotate(-26deg);
+}
+
+/* streams running down the outside of the glass for the enhancer */
+.spill::before,
+.spill::after {
+  content: "";
+  position: absolute;
+  top: 58px;
+  width: 9px;
+  height: 150px;
+  background: var(--water);
+  border-radius: 0 0 999px 999px;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.spill::before { left: -4px; }
+.spill::after { right: -4px; height: 110px; }
+
+/* sugar sparkles for the transmuter */
+.sparkles i {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.sparkles i:nth-child(1) { left: 30%; top: 70px; }
+.sparkles i:nth-child(2) { left: 64%; top: 52px; }
+.sparkles i:nth-child(3) { left: 48%; top: 86px; }
+
+/* ---------- the six reactions ---------- */
+
+/* Enhancer: the water rises past the rim and runs down the sides */
+.glass[data-type="enhancer"] {
+  animation: rise 900ms var(--ease-out) forwards;
+}
+
+@keyframes rise {
+  from { --level: 110px; }
+  to { --level: 182px; }
+}
+
+.glass[data-type="enhancer"] .spill::before,
+.glass[data-type="enhancer"] .spill::after {
+  animation: run 900ms var(--ease-out) 700ms forwards;
+}
+
+@keyframes run {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Transmuter: looks the same, sugar sparkles over the surface */
+.glass[data-type="transmuter"] .sparkles i {
+  animation: twinkle 1.4s var(--ease-in-out) infinite;
+}
+
+.glass[data-type="transmuter"] .sparkles i:nth-child(2) { animation-delay: 0.4s; }
+.glass[data-type="transmuter"] .sparkles i:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Emitter: the colour changes; here the water turns into coffee */
+.glass[data-type="emitter"] .liquid {
+  animation: tint 1.2s var(--ease-out) forwards;
+}
+
+@keyframes tint {
+  to { background-color: var(--coffee); }
+}
+
+/* Conjurer: grains appear */
+.glass[data-type="conjurer"] .liquid i {
+  animation: pop 400ms var(--ease-out) forwards;
+}
+
+.glass[data-type="conjurer"] .liquid i:nth-child(2) { animation-delay: 120ms; }
+.glass[data-type="conjurer"] .liquid i:nth-child(3) { animation-delay: 240ms; }
+.glass[data-type="conjurer"] .liquid i:nth-child(4) { animation-delay: 360ms; }
+.glass[data-type="conjurer"] .liquid i:nth-child(5) { animation-delay: 480ms; }
+
+@keyframes pop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Manipulator: the leaf moves on its own */
+.glass[data-type="manipulator"] .leaf {
+  animation: swirl 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes swirl {
+  0% { transform: translateX(0) rotate(-12deg); }
+  25% { transform: translateX(-28px) rotate(-100deg); }
+  50% { transform: translateX(0) rotate(-200deg); }
+  75% { transform: translateX(28px) rotate(-290deg); }
+  100% { transform: translateX(0) rotate(-372deg); }
+}
+
+/* Specialist: the glass trembles and the leaf floats out */
+.glass[data-type="specialist"] {
+  animation: tremble 450ms linear 3;
+}
+
+.glass[data-type="specialist"] .leaf {
+  animation: levitate 1.6s var(--ease-out) forwards;
+}
+
+@keyframes levitate {
+  to {
+    transform: translateY(-120px) rotate(200deg);
+  }
+}
+
+@keyframes tremble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px) rotate(-1deg); }
+  75% { transform: translateX(4px) rotate(1deg); }
+}
+
+@media (max-width: 900px) {
+  .Nen {
+    grid-template-columns: 1fr;
+  }
+  .stage {
+    min-height: 320px;
+    scale: 1.25;
+  }
+}

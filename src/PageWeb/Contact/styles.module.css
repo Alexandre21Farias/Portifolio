@@ -1,0 +1,263 @@
+.Contact {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5rem);
+  padding: clamp(7rem, 12vw, 12rem) var(--gutter) 2.5rem;
+  background-color: var(--background-color);
+}
+
+/* reveal: heading, chat, email in sequence */
+.Contact > * {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition: opacity var(--dur-enter) var(--ease-out), transform var(--dur-enter) var(--ease-out),
+    filter var(--dur-enter) var(--ease-out);
+}
+
+.Contact > :nth-child(2) { transition-delay: var(--stagger); }
+.Contact > :nth-child(3) { transition-delay: calc(var(--stagger) * 2); }
+.Contact > :nth-child(4) { transition-delay: calc(var(--stagger) * 3); }
+
+.revealActive > * {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-head);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* chat on the left, direct-contact card on the right */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 40%) minmax(0, 40%);
+  justify-content: space-between;
+  align-items: start;
+  gap: 3rem;
+}
+
+.card {
+  position: sticky;
+  top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.75rem, 3vw, 3rem);
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-head);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.cardText {
+  margin: 0;
+  font-size: var(--step-body);
+  color: var(--text-secondary);
+}
+
+.cardRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardLink {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--step-lead);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cardLink:hover {
+  color: var(--accent);
+}
+
+.copy {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.copy:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.copy:active {
+  transform: scale(0.94);
+}
+
+.copied {
+  min-height: 1.2em;
+  margin-top: -0.5rem;
+  font-size: var(--step-small);
+  color: var(--accent);
+}
+
+.cardLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.cardLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  font-size: var(--step-body);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.cardLinks a:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    position: static;
+  }
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bubble {
+  max-width: 85%;
+  margin: 0;
+  padding: 0.85rem 1.1rem;
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--ink);
+  border-radius: 18px;
+  animation: bubbleIn 260ms var(--ease-out) backwards;
+}
+
+.me {
+  align-self: flex-start;
+  background: var(--background-tertiary);
+  border-bottom-left-radius: 4px;
+}
+
+.you {
+  align-self: flex-end;
+  background: var(--bubble-you);
+  color: var(--on-bubble-you);
+  border-bottom-right-radius: 4px;
+}
+
+/* answers arrive one bubble at a time after the question, like someone typing */
+.pair .me {
+  animation-delay: calc(220ms + var(--j, 0) * 420ms);
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.reply {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--step-small);
+  font-weight: 600;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.reply:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.reply:active {
+  transform: scale(0.96);
+}
+
+/* the email as the page's closing line */
+.email {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 0.4rem + 4.6vw, 6.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.email:hover {
+  color: var(--accent);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: var(--step-small);
+  color: var(--text-secondary);
+}
