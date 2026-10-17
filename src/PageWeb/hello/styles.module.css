@@ -540,3 +540,16 @@
     max-width: none;
   }
 }
+
+/* touch screens: no cursor to stick to, so the gum, goo and aces stay off (a tap would leave :hover stuck) */
+@media (hover: none) {
+  .Goo,
+  .Cards,
+  .Aces {
+    display: none;
+  }
+
+  .gum {
+    transform: none !important;
+  }
+}

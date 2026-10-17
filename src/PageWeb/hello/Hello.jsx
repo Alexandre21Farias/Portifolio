@@ -69,12 +69,13 @@ const release = (e) => {
 
 const headGum = {
   onPointerDown: (e) => {
+    if (e.pointerType === "touch") return;
     e.currentTarget.setPointerCapture(e.pointerId);
     e.currentTarget.dataset.held = "1";
     gumMove(e);
     gooMove(e);
   },
-  onPointerMove: (e) => (gumMove(e), gooMove(e)),
+  onPointerMove: (e) => e.pointerType !== "touch" && (gumMove(e), gooMove(e)),
   onPointerLeave: (e) => {
     if (!e.currentTarget.dataset.held) (gumLeave(e), gooLeave(e));
   },
